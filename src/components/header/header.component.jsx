@@ -5,8 +5,10 @@ import { connect } from 'react-redux';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import './header.style.scss';
 import { setSignOutUser } from '../../redux/user/user.actions';
+import CartIcon from '../cart-icon/cart-icon.component';
+import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 
-const Header = ({ currentUser, setSignOutUser }) => (
+const Header = ({ currentUser, hidden, setSignOutUser }) => (
     <div className="header">
         <Link className="logo-container" to="/">
             <Logo className="logo" />
@@ -20,13 +22,19 @@ const Header = ({ currentUser, setSignOutUser }) => (
                 <div className="option" onClick={() => setSignOutUser(null)}>Sign Out</div> : 
                 <Link className="option" to='/login'>Login</Link>
             }
+            <CartIcon />
         </div>
+        {
+            hidden ? null : <CartDropdown /> 
+        }
+        
     </div>
 );
 
 
-const mapStateToProps = state => ({
-    currentUser: state.user.currentUser
+const mapStateToProps = ({user: {currentUser}, cart: hidden}) => ({
+    currentUser,
+    hidden
 });
 
 const mapDispatchToProps = dispatch => ({
