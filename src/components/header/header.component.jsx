@@ -25,7 +25,7 @@ const Header = ({ currentUser, hidden, setSignOutUser }) => (
             <CartIcon />
         </div>
         {
-            hidden ? null : <CartDropdown /> 
+            hidden.hidden ? null : <CartDropdown /> 
         }
         
     </div>
