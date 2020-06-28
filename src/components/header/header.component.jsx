@@ -4,8 +4,9 @@ import { auth } from '../../firebase/firebase.utils';
 import { connect } from 'react-redux';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import './header.style.scss';
+import { setSignOutUser } from '../../redux/user/user.actions';
 
-const Header = ({ currentUser }) => (
+const Header = ({ currentUser, setSignOutUser }) => (
     <div className="header">
         <Link className="logo-container" to="/">
             <Logo className="logo" />
@@ -16,14 +17,19 @@ const Header = ({ currentUser }) => (
             {
                 
                 currentUser ? 
-                <div className="option" onClick={() => auth.signOut()}>Sign Out</div> : 
+                <div className="option" onClick={() => setSignOutUser(null)}>Sign Out</div> : 
                 <Link className="option" to='/login'>Login</Link>
             }
         </div>
     </div>
 );
 
+
 const mapStateToProps = state => ({
     currentUser: state.user.currentUser
-})
-export default connect(mapStateToProps)(Header);
+});
+
+const mapDispatchToProps = dispatch => ({
+    setSignOutUser: user => dispatch(setSignOutUser(user))
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
