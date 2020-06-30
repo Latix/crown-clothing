@@ -1,10 +1,10 @@
 import React, { Suspense, lazy } from 'react';
-import { LoopCircleLoading } from 'react-loadingg';
+// import { LoopCircleLoading } from 'react-loadingg';
 import SkeletonCard from './components/skeleton';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './App.css';
-import HomePage from './pages/homepage/homepage.component';
+// import HomePage from './pages/homepage/homepage.component';
 // import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import AuthPage from './pages/auth/auth.component';
@@ -53,6 +53,7 @@ class App extends React.Component  {
   // }
   
   render() {
+    const HomePage = lazy(() => import('./pages/homepage/homepage.component'));
     const ShopPage = lazy(() => import('./pages/shop/shop.component'));
     return (
         <div>
