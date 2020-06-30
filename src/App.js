@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
+import { LoopCircleLoading } from 'react-loadingg';
+import SkeletonCard from './components/skeleton';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './App.css';
 import HomePage from './pages/homepage/homepage.component';
-import ShopPage from './pages/shop/shop.component';
+// import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import AuthPage from './pages/auth/auth.component';
 import CheckoutPage from './pages/checkout/checkout-item.component';
@@ -51,15 +53,18 @@ class App extends React.Component  {
   // }
   
   render() {
+    const ShopPage = lazy(() => import('./pages/shop/shop.component'));
     return (
         <div>
           <Header />
-          <Switch>
-            <Route exact path='/' component={HomePage} />
-            <Route path='/shop' component={ShopPage} />
-            <Route path='/checkout' component={CheckoutPage} />
-            <Route exact path='/login' render={() => this.props.currentUser ?  (<Redirect to="/" />) : ( <AuthPage />) } />
-          </Switch>
+          <Suspense fallback={<SkeletonCard />}>
+            <Switch>
+              <Route exact path='/' component={HomePage} />
+              <Route path='/shop' component={ShopPage} />
+              <Route path='/checkout' component={CheckoutPage} />
+              <Route exact path='/login' render={() => this.props.currentUser ?  (<Redirect to="/" />) : ( <AuthPage />) } />
+            </Switch>
+          </Suspense>
         </div>
     );
   }
